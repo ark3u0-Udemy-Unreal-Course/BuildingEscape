@@ -1,0 +1,8 @@
+Intermediate/
+Binaries/
+Build/
+DerivedDataCache/
+Saved/
+
+.vscode/
+BuildingEscape.code-workspace
