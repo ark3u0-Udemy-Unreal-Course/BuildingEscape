@@ -27,13 +27,21 @@ protected:
 
 private:
 	void OpenDoor();
+	void CloseDoor();
 
 	UPROPERTY(EditAnywhere)
 	float OpenAngle = 90.0f;
+	UPROPERTY(EditAnywhere)
+	float CloseAngle = 0.0f;
 
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* PressurePlate;
 
-	AActor* ActorThatOpens; // Remember pawn inherits from actor
+	UPROPERTY(EditAnywhere)
+	float DoorCloseDelay = 1.f;
 
+	float LastDoorOpenTime;
+
+	AActor* ActorThatOpens; // Remember pawn inherits from actor
+	AActor* Owner;
 };
