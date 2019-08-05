@@ -6,6 +6,7 @@
 #include "Engine/TriggerVolume.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
+#include "Components/PrimitiveComponent.h"
 #include "Components/ActorComponent.h"
 #include "OpenDoor.generated.h"
 
@@ -26,22 +27,25 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	void OpenDoor();
-	void CloseDoor();
-
 	UPROPERTY(EditAnywhere)
 	float OpenAngle = 90.0f;
 	UPROPERTY(EditAnywhere)
 	float CloseAngle = 0.0f;
-
+	UPROPERTY(EditAnywhere)
+	float DoorCloseDelay = 1.f;
+	UPROPERTY(EditAnywhere)
+	float TriggerMass = 50.0f;
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* PressurePlate;
 
-	UPROPERTY(EditAnywhere)
-	float DoorCloseDelay = 1.f;
-
 	float LastDoorOpenTime;
 
-	AActor* ActorThatOpens; // Remember pawn inherits from actor
+	
+	
+	void OpenDoor();
+	void CloseDoor();
+
+	float GetTotalMassOfActorsOnPlate();
+
 	AActor* Owner;
 };
