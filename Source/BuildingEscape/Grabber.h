@@ -35,6 +35,11 @@ private:
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
 	UInputComponent* InputComponent = nullptr;
 
+	// Returns current end of reach line
+	FVector GetReachLineEnd();
+	// Returns current start of reach line
+	FVector GetReachLineStart();
+
 	// Ray-cast and grab what's in reach
 	void Grab();
 
