@@ -21,15 +21,23 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 	Owner = GetOwner();
+	if (!PressurePlate)
+	{
+		UE_LOG(LogTemp, Error, TEXT("PressurePlate Missing: no ATriggerVolume found on Owner %s"), *GetOwner()->GetName());
+	}
 }
 
 void UOpenDoor::OpenDoor() 
 {
-	Owner->SetActorRotation(FRotator(0.f, OpenAngle, 0.f));
+	OnOpenRequest.Broadcast();
 }
 
 void UOpenDoor::CloseDoor()
 {
+	if (!Owner) 
+	{ 
+		return; 
+	}
 	Owner->SetActorRotation(FRotator(0.f, CloseAngle, 0.f));
 }
 
@@ -38,9 +46,12 @@ float UOpenDoor::GetTotalMassOfActorsOnPlate()
 	float TotalMass = 0.f;
 
 	TArray<AActor*> OverlappingActors;
+	if (!PressurePlate) { 
+		return TotalMass; 
+	}
 	PressurePlate->GetOverlappingActors(OUT OverlappingActors);
 
-	for (const auto& Actor : OverlappingActors)
+	for (const AActor* Actor : OverlappingActors)
 	{
 		TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
 		UE_LOG(LogTemp, Warning, TEXT("%s on pressure plate"), *Actor->GetName())
